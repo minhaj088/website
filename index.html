@@ -1,4 +1,7 @@
+<!doctype html>
+<html lang="en">
 <meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Minhaj Aman</title>
 <meta name="claude:viewport-fit-sides" content="cover">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -278,10 +281,9 @@ html[data-page="work"] body{background:var(--paper)}
   margin:0 0 var(--s6);padding:0;list-style:none;
 }
 .rs-key li{font-family:var(--mono);font-size:10.5px;letter-spacing:.15em;text-transform:uppercase;color:var(--muted)}
-.rs-key b{color:var(--accent);font-weight:400;margin-right:9px}
+
 .rs-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(268px,1fr));gap:0 clamp(26px,3.4vw,54px)}
 .rs-i{border-top:1px solid var(--line);padding:15px 0 18px}
-.rs-n{display:block;font-family:var(--mono);font-size:9.5px;letter-spacing:.17em;color:var(--faint);margin-bottom:7px}
 .rs-t{font-size:19.5px;font-weight:600;letter-spacing:-.022em;line-height:1.26;margin:0}
 @media (max-width:620px){.rs-grid{grid-template-columns:1fr}}
 
@@ -616,6 +618,57 @@ a.file:hover .f-title,a.file:focus-visible .f-title{text-decoration-color:var(--
 
 /* "I'm listening" lives on the home page only — every other page has the button */
 html:not([data-page="top"]) .bar nav a[href="#contact"]{display:none}
+
+/* ============================================================
+   PHONES
+   ============================================================ */
+body{margin:0}
+
+@media (max-width:760px){
+  /* the nav was taking a quarter of the screen: one scrollable row instead */
+  .bar{padding-top:12px;padding-bottom:10px}
+  .bar .wrap{gap:12px}
+  .bar nav{
+    flex-wrap:nowrap;overflow-x:auto;overflow-y:hidden;
+    gap:18px;scrollbar-width:none;-ms-overflow-style:none;
+    -webkit-overflow-scrolling:touch;
+    /* let it run to the screen edge so it reads as scrollable */
+    margin-inline:calc(max(16px,env(safe-area-inset-left,0px)) * -1);
+    padding-inline:max(16px,env(safe-area-inset-left,0px));
+    mask-image:linear-gradient(90deg,#000 0 88%,transparent 100%);
+    -webkit-mask-image:linear-gradient(90deg,#000 0 88%,transparent 100%);
+  }
+  .bar nav::-webkit-scrollbar{display:none}
+  .bar nav a{font-size:12.5px;letter-spacing:.1em;white-space:nowrap;padding-block:7px}
+  /* no room for the button: keep "I'm listening" in the nav on every page instead */
+  .bar .pill--ink{display:none}
+  html:not([data-page="top"]) .bar nav a[href="#contact"]{display:inline-block}
+
+  /* give the big type room to breathe without shouting */
+  .shead h2{font-size:clamp(30px,10vw,44px)}
+  .hname{font-size:clamp(28px,9vw,40px)}
+  .ix-t{font-size:clamp(24px,8.2vw,38px)}
+  .ix{padding:20px 0}
+  .pf .v{font-size:19px}
+
+  /* comfortable tap targets */
+  .ctsocial a,.addr-row,.slip-re button{min-height:44px}
+  .slip-re button{display:inline-flex;align-items:center}
+
+  /* the portrait should not dominate the first screen */
+  .plate img{max-height:52vh;object-fit:cover;object-position:50% 30%}
+
+  /* 177px of nothing sat between the nav and the page title */
+  .view{margin-top:24px}
+  .paged .view > .wrap{padding-top:26px}
+  .t-lede,.prose p{font-size:14.5px}
+  .copy{min-height:40px;padding-inline:16px}
+}
+
+@media (max-width:420px){
+  .bar nav a{font-size:11.5px;letter-spacing:.08em}
+  .f-title{font-size:13.5px}
+}
 </style>
 
 <div id="swipe" aria-hidden="true"><span class="mark"></span></div>
@@ -1287,17 +1340,14 @@ html:not([data-page="top"]) .bar nav a[href="#contact"]{display:none}
 
   THEMES.forEach(function(th){
     var li = document.createElement('li');
-    var b  = document.createElement('b'); b.textContent = th.n;
-    li.appendChild(b); li.appendChild(document.createTextNode(th.t));
+    li.textContent = th.t;
     sw.appendChild(li);
   });
   ORGS.forEach(function(o){
-    var codes = o.t.map(function(i){ return THEMES[i].n; }).join(' / ');
     var d = document.createElement('div');
     d.className = 'rs-i';
-    var n = document.createElement('span'); n.className='rs-n'; n.textContent = codes;
-    var t = document.createElement('p');   t.className='rs-t'; t.textContent = o.name;
-    d.appendChild(n); d.appendChild(t); nm.appendChild(d);
+    var t = document.createElement('p'); t.className='rs-t'; t.textContent = o.name;
+    d.appendChild(t); nm.appendChild(d);
   });
 })();
 
@@ -1360,3 +1410,4 @@ html:not([data-page="top"]) .bar nav a[href="#contact"]{display:none}
   }
 })();
 </script>
+</html>
